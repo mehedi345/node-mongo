@@ -1,11 +1,42 @@
 const express = require('express');
-
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 
+app.use(cors())
+app.use(bodyParser.json());
 
+const users = ['Asad', 'Moin', 'Sabed', 'Susmita', 'Sohana'];
 
+//get
 
+app.get('/', (req, res) => {
+    const fruit = {
+        product: 'ada',
+        price: 20
+    }
+     res.send (fruit);
+    
+    });
 
-app.get('/', (req, res) => { res.send ('I know how to open node yaay')});
+app.get('/fruits/banana', (req, res) => {
+    res.send({fruit: 'banana', quantity: 1000, price: 10000})
+})
 
-app.listen(4200, ()=> console.log('Listening to port 3000'));
+app.get('/users/:id', (req, res) => {
+    const id = req.params.id;
+   
+    const name = users[id];
+    res.send ({id, name})
+    
+})
+
+//post
+
+app.post('/addUser', (req, res) => {
+    const user = req.body;
+    user.id = 55;
+    res.send(user)
+})
+
+app.listen(4200, ()=> console.log('Listening to port 4200'));
